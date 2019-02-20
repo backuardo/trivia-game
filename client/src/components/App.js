@@ -11,20 +11,26 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.callApi()
+    //this.getNewQuestion();
+  }
+
+  // update question in state
+  getNewQuestion = () => {
+    this.fetchQuestion()
       .then(res => {
         this.setState({
           question: res.question,
-          a: [res.a, res.a === res.answer],
+          a: [res.a, res.a === res.answer], // [choice, isCorrect]
           b: [res.b, res.b === res.answer],
           c: [res.c, res.c === res.answer]
         });
         console.log(res);
       })
       .catch(err => console.log(err));
-  }
+  };
 
-  callApi = async () => {
+  // fetch question from server
+  fetchQuestion = async () => {
     const response = await fetch("/api/hello");
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
@@ -32,22 +38,13 @@ class App extends Component {
   };
 
   handleChoice = answer => {
-    console.log(answer[0]);
+    // check if correct, update score
     answer[1]
       ? this.setState({ score: this.state.score + 10 })
       : this.setState({ score: this.state.score - 10 });
 
-    this.callApi()
-      .then(res => {
-        this.setState({
-          question: res.question,
-          a: [res.a, res.a === res.answer],
-          b: [res.b, res.b === res.answer],
-          c: [res.c, res.c === res.answer]
-        });
-        console.log(res);
-      })
-      .catch(err => console.log(err));
+    // get a new question
+    this.getNewQuestion();
   };
 
   // handleSubmit = async e => {
@@ -66,9 +63,16 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <h1>Score: {this.state.score}</h1>
+        {/* start button */}
+        {!this.state.question && (
+          <div>
+            <button onClick={() => this.getNewQuestion()}>Start</button>
+          </div>
+        )}
+        {/* question and choices */}
         {this.state.question && (
           <div>
+            <h1>Score: {this.state.score}</h1>
             <h2>{this.state.question}</h2>
 
             <div>

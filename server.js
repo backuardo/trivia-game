@@ -50,7 +50,7 @@ app.get("/api/hello", (req, res) => {
       .skip(random)
       .exec((err, result) => {
         if (err) throw err;
-        console.log(result);
+        //console.log(result);
         res.send(result);
       });
   });
