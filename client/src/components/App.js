@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Button from "./styles/Button";
+import QuestionContainer from "./styles/QuestionContainer";
 import "./App.css";
 
 class App extends Component {
@@ -65,32 +67,32 @@ class App extends Component {
       <div className="app">
         {/* start button */}
         {!this.state.question && (
-          <div>
-            <button onClick={() => this.getNewQuestion()}>Start</button>
-          </div>
+          <Button onClick={() => this.getNewQuestion()}>Start</Button>
         )}
         {/* question and choices */}
         {this.state.question && (
           <div>
-            <h1>Score: {this.state.score}</h1>
-            <h2>{this.state.question}</h2>
+            <h3>Score: {this.state.score}</h3>
+            <QuestionContainer>
+              <h2>{this.state.question}</h2>
+            </QuestionContainer>
 
             <div>
-              <button onClick={() => this.handleChoice(this.state.a)}>
+              <Button onClick={() => this.handleChoice(this.state.a)}>
                 {this.state.a[0]}
-              </button>
+              </Button>
             </div>
 
             <div>
-              <button onClick={() => this.handleChoice(this.state.b)}>
+              <Button onClick={() => this.handleChoice(this.state.b)}>
                 {this.state.b[0]}
-              </button>
+              </Button>
             </div>
 
             <div>
-              <button onClick={() => this.handleChoice(this.state.c)}>
+              <Button onClick={() => this.handleChoice(this.state.c)}>
                 {this.state.c[0]}
-              </button>
+              </Button>
             </div>
           </div>
         )}
