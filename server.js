@@ -43,18 +43,16 @@ mongoose
 // }
 
 // ROUTES ----------------------------------------------------------------------
-app.get("/api/hello", (req, res) => {
+app.get("/api/question", (req, res) => {
   Question.count().exec((err, count) => {
     let random = Math.floor(Math.random() * count);
     Question.findOne()
       .skip(random)
       .exec((err, result) => {
         if (err) throw err;
-        //console.log(result);
         res.send(result);
       });
   });
-  // res.send({ express: "Hello From Express" });
 });
 
 app.post("/api/world", (req, res) => {
