@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // DB --------------------------------------------------------------------------
-const mongoUri = require("./config/keys").mongoURI;
+const mongoUri = process.env.mongoURI || require("./config/keys").mongoURI;
 
 mongoose
   .connect(mongoUri)
