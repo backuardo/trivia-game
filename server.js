@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
 const Question = require("./models/Question");
+const HighScore = require("./models/HighScore");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -42,6 +43,17 @@ mongoose
 //     console.log("Question created!");
 //   });
 // }
+
+// SCORE -----------------------------------------------------------------------
+// const newHighScore = HighScore({
+//   score: 100,
+//   name: "Ben E"
+// });
+//
+// newHighScore.save(err => {
+//   if (err) throw err;
+//   console.log("HighScore created!");
+// });
 
 // ROUTES ----------------------------------------------------------------------
 app.get("/api/question", (req, res) => {

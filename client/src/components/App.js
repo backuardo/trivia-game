@@ -3,9 +3,13 @@ import Button from "./styles/Button";
 import QuestionContainer from "./styles/QuestionContainer";
 import "./App.css";
 
+// TODO: after checking if answer is correct, set [1] to false so that they cant double click
+
 class App extends Component {
   state = {
-    score: 0,
+    playing: false,
+    score: null,
+    time: null,
     question: null,
     a: null,
     b: null,
@@ -13,8 +17,15 @@ class App extends Component {
   };
 
   componentDidMount() {
-    //this.getNewQuestion();
+    this.timer = setInterval(() => {
+      this.handleTime();
+    }, 1000);
   }
+
+  startGame = () => {
+    this.getNewQuestion();
+    this.setState({ playing: true, score: 0, time: 60 });
+  };
 
   // update question in state
   getNewQuestion = () => {
@@ -39,14 +50,22 @@ class App extends Component {
     return body;
   };
 
+  // check if correct, update score, get new question
   handleChoice = answer => {
-    // check if correct, update score
     answer[1]
       ? this.setState({ score: this.state.score + 10 })
       : this.setState({ score: this.state.score - 10 });
 
-    // get a new question
     this.getNewQuestion();
+  };
+
+  handleTime = () => {
+    const currTime = this.state.time;
+    if (this.state.playing && currTime > 0) {
+      this.setState({ time: currTime - 1 });
+    } else {
+      this.setState({ playing: false });
+    }
   };
 
   // handleSubmit = async e => {
@@ -66,13 +85,22 @@ class App extends Component {
     return (
       <div className="app">
         {/* start button */}
-        {!this.state.question && (
-          <Button onClick={() => this.getNewQuestion()}>Start</Button>
+        {!this.state.playing && this.state.score === null && (
+          <Button onClick={() => this.startGame()}>Start</Button>
+        )}
+        {/* game over / try again */}
+        {!this.state.playing && this.state.score !== null && (
+          <div className="gameOver">
+            <h1>Game over, score: {this.state.score}</h1>
+            <Button onClick={() => this.startGame()}>Play again!</Button>
+          </div>
         )}
         {/* question and choices */}
-        {this.state.question && (
+        {this.state.playing && this.state.question && (
           <div>
-            <h3>Score: {this.state.score}</h3>
+            <h3>
+              Score: {this.state.score} Time remaining: {this.state.time}
+            </h3>
             <QuestionContainer>
               <h2>{this.state.question}</h2>
             </QuestionContainer>
