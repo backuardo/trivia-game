@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import Button from "./styles/Button";
+import AnswerButton from "./styles/AnswerButton";
+import NewGameButton from "./styles/NewGameButton";
 import QuestionContainer from "./styles/QuestionContainer";
 import "./App.css";
 
@@ -15,12 +16,12 @@ class App extends Component {
   componentDidMount() {
     this.timer = setInterval(() => {
       this.handleTime();
-    }, 1000);
+    }, 100);
   }
 
   startGame = () => {
     this.getNewQuestion();
-    this.setState({ playing: true, score: 0, time: 60 });
+    this.setState({ playing: true, score: 0, time: 600 });
   };
 
   // update question in state
@@ -83,20 +84,33 @@ class App extends Component {
       <div className="app">
         {/* start button */}
         {!this.state.playing && this.state.score === null && (
-          <Button onClick={() => this.startGame()}>Start</Button>
+          <div>
+            <h1>It's time for some trivia!</h1>
+            <p>
+              You have 60 seconds to answer as many questions as possible, good
+              luck!
+            </p>
+            <NewGameButton onClick={() => this.startGame()}>
+              Start
+            </NewGameButton>
+          </div>
         )}
         {/* game over / try again */}
         {!this.state.playing && this.state.score !== null && (
           <div>
-            <h1>Game over, score: {this.state.score}</h1>
-            <Button onClick={() => this.startGame()}>Play again!</Button>
+            <h1>Game over!</h1>
+            <h2>Score: {this.state.score}</h2>
+            <NewGameButton gameOver onClick={() => this.startGame()}>
+              Play again!
+            </NewGameButton>
           </div>
         )}
         {/* question and choices */}
         {this.state.playing && this.state.question && (
           <div>
             <h3>
-              Score: {this.state.score} Time remaining: {this.state.time}
+              Score: {this.state.score} Time:{" "}
+              {(this.state.time / 10).toFixed(1)}
             </h3>
             <QuestionContainer>
               <h2>{this.state.question}</h2>
@@ -104,9 +118,12 @@ class App extends Component {
             {this.state.answers.map(answer => {
               return (
                 <div key={answer}>
-                  <Button onClick={() => this.handleChoice(answer)}>
+                  <AnswerButton
+                    isCorrect={answer[1]}
+                    onClick={() => this.handleChoice(answer)}
+                  >
                     {answer[0]}
-                  </Button>
+                  </AnswerButton>
                 </div>
               );
             })}
