@@ -6,7 +6,7 @@ import AnswerButton from "../styles/AnswerButton";
 const MidGame = props => {
   return (
     <div>
-      <GameStatus className={props.time <= 100 ? "warning" : ""}>
+      <GameStatus className={props.time <= 10 ? "warning" : ""}>
         <h1>Score: {props.score}</h1>
         <h2>{props.time}</h2>
       </GameStatus>
