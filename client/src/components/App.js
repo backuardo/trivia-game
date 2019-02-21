@@ -3,17 +3,13 @@ import Button from "./styles/Button";
 import QuestionContainer from "./styles/QuestionContainer";
 import "./App.css";
 
-// TODO: after checking if answer is correct, set [1] to false so that they cant double click
-
 class App extends Component {
   state = {
     playing: false,
     score: null,
     time: null,
     question: null,
-    a: null,
-    b: null,
-    c: null
+    answers: null
   };
 
   componentDidMount() {
@@ -33,11 +29,12 @@ class App extends Component {
       .then(res => {
         this.setState({
           question: res.question,
-          a: [res.a, res.a === res.answer], // [choice, isCorrect]
-          b: [res.b, res.b === res.answer],
-          c: [res.c, res.c === res.answer]
+          answers: [
+            [res.a, res.a === res.answer], // [choice, isCorrect]
+            [res.b, res.b === res.answer],
+            [res.c, res.c === res.answer]
+          ]
         });
-        console.log(res);
       })
       .catch(err => console.log(err));
   };
@@ -54,7 +51,7 @@ class App extends Component {
   handleChoice = answer => {
     answer[1]
       ? this.setState({ score: this.state.score + 10 })
-      : this.setState({ score: this.state.score - 10 });
+      : this.setState({ score: this.state.score - 5 });
 
     this.getNewQuestion();
   };
@@ -90,7 +87,7 @@ class App extends Component {
         )}
         {/* game over / try again */}
         {!this.state.playing && this.state.score !== null && (
-          <div className="gameOver">
+          <div>
             <h1>Game over, score: {this.state.score}</h1>
             <Button onClick={() => this.startGame()}>Play again!</Button>
           </div>
@@ -104,24 +101,15 @@ class App extends Component {
             <QuestionContainer>
               <h2>{this.state.question}</h2>
             </QuestionContainer>
-
-            <div>
-              <Button onClick={() => this.handleChoice(this.state.a)}>
-                {this.state.a[0]}
-              </Button>
-            </div>
-
-            <div>
-              <Button onClick={() => this.handleChoice(this.state.b)}>
-                {this.state.b[0]}
-              </Button>
-            </div>
-
-            <div>
-              <Button onClick={() => this.handleChoice(this.state.c)}>
-                {this.state.c[0]}
-              </Button>
-            </div>
+            {this.state.answers.map(answer => {
+              return (
+                <div key={answer}>
+                  <Button onClick={() => this.handleChoice(answer)}>
+                    {answer[0]}
+                  </Button>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
