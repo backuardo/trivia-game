@@ -25,7 +25,7 @@ class App extends Component {
 
   startGame = () => {
     this.getNewQuestion();
-    this.setState({ playing: true, score: 0, time: 200 });
+    this.setState({ playing: true, score: 0, time: 600 });
   };
 
   // update question in state

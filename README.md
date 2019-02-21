@@ -18,6 +18,7 @@ Start dev servers: `yarn dev`
 1.  Record high score
 2.  Footer/header with link to high score, Github
 3.  Show high scores in game over screen
+4.  Rather than using findOne(), grab more 'random' entry.
 
 ## NOTES
 
