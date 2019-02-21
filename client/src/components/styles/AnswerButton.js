@@ -10,8 +10,8 @@ const AnswerButton = styled.button`
   border-radius: 5px;
   font-size: 200%;
   padding: 5px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 12px;
+  margin-bottom: 12px;
   cursor: pointer;
   outline: none;
 

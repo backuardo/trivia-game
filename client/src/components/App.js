@@ -14,7 +14,8 @@ class App extends Component {
     score: null,
     time: null,
     question: null,
-    answers: null
+    answers: null,
+    numQuestions: 0
   };
 
   componentDidMount() {
@@ -25,7 +26,7 @@ class App extends Component {
 
   startGame = () => {
     this.getNewQuestion();
-    this.setState({ playing: true, score: 0, time: 60 });
+    this.setState({ playing: true, score: 0, time: 60, numQuestions: 0 });
   };
 
   // update question in state
@@ -38,7 +39,8 @@ class App extends Component {
             [res.a, res.a === res.answer], // [choice, isCorrect]
             [res.b, res.b === res.answer],
             [res.c, res.c === res.answer]
-          ]
+          ],
+          numQuestions: this.state.numQuestions + 1
         });
       })
       .catch(err => console.log(err));
@@ -99,6 +101,7 @@ class App extends Component {
             question={this.state.question}
             answers={this.state.answers}
             handleChoice={this.handleChoice}
+            questionNum={this.state.numQuestions}
           />
         )}
       </AppContainer>
