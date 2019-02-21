@@ -1,8 +1,12 @@
 import React, { Component } from "react";
-import AnswerButton from "./styles/AnswerButton";
-import NewGameButton from "./styles/NewGameButton";
-import QuestionContainer from "./styles/QuestionContainer";
-import "./App.css";
+import styled from "styled-components";
+import PreGame from "./gameViews/PreGame";
+import MidGame from "./gameViews/MidGame";
+import PostGame from "./gameViews/PostGame";
+
+const AppContainer = styled.div`
+  text-align: center;
+`;
 
 class App extends Component {
   state = {
@@ -21,7 +25,7 @@ class App extends Component {
 
   startGame = () => {
     this.getNewQuestion();
-    this.setState({ playing: true, score: 0, time: 600 });
+    this.setState({ playing: true, score: 0, time: 200 });
   };
 
   // update question in state
@@ -81,55 +85,26 @@ class App extends Component {
 
   render() {
     return (
-      <div className="app">
+      <AppContainer>
         {/* start button */}
         {!this.state.playing && this.state.score === null && (
-          <div>
-            <h1>It's time for some trivia!</h1>
-            <p>
-              You have 60 seconds to answer as many questions as possible, good
-              luck!
-            </p>
-            <NewGameButton onClick={() => this.startGame()}>
-              Start
-            </NewGameButton>
-          </div>
+          <PreGame startGame={this.startGame} />
         )}
         {/* game over / try again */}
         {!this.state.playing && this.state.score !== null && (
-          <div>
-            <h1>Game over!</h1>
-            <h2>Score: {this.state.score}</h2>
-            <NewGameButton gameOver onClick={() => this.startGame()}>
-              Play again!
-            </NewGameButton>
-          </div>
+          <PostGame score={this.state.score} startGame={this.startGame} />
         )}
         {/* question and choices */}
         {this.state.playing && this.state.question && (
-          <div>
-            <h3>
-              Score: {this.state.score} Time:{" "}
-              {(this.state.time / 10).toFixed(1)}
-            </h3>
-            <QuestionContainer>
-              <h2>{this.state.question}</h2>
-            </QuestionContainer>
-            {this.state.answers.map(answer => {
-              return (
-                <div key={answer}>
-                  <AnswerButton
-                    isCorrect={answer[1]}
-                    onClick={() => this.handleChoice(answer)}
-                  >
-                    {answer[0]}
-                  </AnswerButton>
-                </div>
-              );
-            })}
-          </div>
+          <MidGame
+            score={this.state.score}
+            time={this.state.time}
+            question={this.state.question}
+            answers={this.state.answers}
+            handleChoice={this.handleChoice}
+          />
         )}
-      </div>
+      </AppContainer>
     );
   }
 }
