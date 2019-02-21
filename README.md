@@ -15,10 +15,12 @@ Start dev servers: `yarn dev`
 
 ### UX
 
+0.  Transfer questions into a stack, pop them off, if list is empty repopulate.
 1.  Record high score
-2.  Footer/header with link to high score, Github
-3.  Show high scores in game over screen
-4.  Rather than using findOne(), grab more 'random' entry.
+1.  Footer/header with link to high score, Github
+1.  Show high scores in game over screen
+1.  Rather than using findOne(), grab more 'random' entry.
+1.  Figure out a way to catch 'cheaters' (ppl changing state)
 
 ## NOTES
 
