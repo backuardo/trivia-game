@@ -10,7 +10,7 @@ Start dev servers: `yarn dev`
 
 1.  Center start button, game over, etc.
 2.  Countdown turns red/bold when 10 seconds remain
-3.  Indicate correct answer
+3.  Indicate correct answer (via animation?)
 4.  Layout score, etc.
 
 ### UX
@@ -18,3 +18,10 @@ Start dev servers: `yarn dev`
 1.  Record high score
 2.  Footer/header with link to high score, Github
 3.  Show high scores in game over screen
+
+## NOTES
+
+1. Blue: #516eab
+2. Green: #52c291
+3. Yellow: #fab864
+4. Red: #cb4d58
