@@ -19,9 +19,7 @@ Start dev servers: `yarn dev`
 2.  Record high score
 3.  Footer/header with link to high score, Github
 4.  Show high scores in game over screen
-5.  Rather than using findOne(), grab more 'random' entry.
-6.  Figure out a way to catch 'cheaters' (ppl changing state)
-7.  Timer continues when window in background.
+5.  Figure out a way to catch 'cheaters' (ppl changing state)
 
 ### LATER
 
