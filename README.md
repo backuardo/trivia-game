@@ -23,6 +23,10 @@ Start dev servers: `yarn dev`
 6.  Figure out a way to catch 'cheaters' (ppl changing state)
 7.  Timer continues when window in background.
 
+### LATER
+
+1. Set up web worker to do millisecond countdown
+
 ## NOTES
 
 1. Blue: #516eab
