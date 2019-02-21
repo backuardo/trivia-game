@@ -7,11 +7,13 @@ const MidGame = props => {
   return (
     <div>
       <GameStatus className={props.time <= 10 ? "warning" : ""}>
-        <h1>Score: {props.score}</h1>
-        <h2>{props.time}</h2>
+        <h1 className="score">Score: {props.score}</h1>
+        <h1>|</h1>
+        <h1 className="time">Time: {props.time}</h1>
       </GameStatus>
       <QuestionContainer>
-        <h3>{props.question}</h3>
+        <p>Q{props.questionNum}</p>
+        <h2>{props.question}</h2>
       </QuestionContainer>
       {props.answers.map(answer => {
         return (
