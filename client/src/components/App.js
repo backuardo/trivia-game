@@ -86,15 +86,12 @@ class App extends Component {
   render() {
     return (
       <AppContainer>
-        {/* start button */}
         {!this.state.playing && this.state.score === null && (
           <PreGame startGame={this.startGame} />
         )}
-        {/* game over / try again */}
         {!this.state.playing && this.state.score !== null && (
           <PostGame score={this.state.score} startGame={this.startGame} />
         )}
-        {/* question and choices */}
         {this.state.playing && this.state.question && (
           <MidGame
             score={this.state.score}
