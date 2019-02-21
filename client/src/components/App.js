@@ -20,12 +20,12 @@ class App extends Component {
   componentDidMount() {
     this.timer = setInterval(() => {
       this.handleTime();
-    }, 100);
+    }, 1000);
   }
 
   startGame = () => {
     this.getNewQuestion();
-    this.setState({ playing: true, score: 0, time: 600 });
+    this.setState({ playing: true, score: 0, time: 60 });
   };
 
   // update question in state

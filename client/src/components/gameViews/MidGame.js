@@ -8,7 +8,7 @@ const MidGame = props => {
     <div>
       <GameStatus className={props.time <= 100 ? "warning" : ""}>
         <h1>Score: {props.score}</h1>
-        <h2>{(props.time / 10).toFixed(1)}</h2>
+        <h2>{props.time}</h2>
       </GameStatus>
       <QuestionContainer>
         <h3>{props.question}</h3>
