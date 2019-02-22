@@ -68,11 +68,12 @@ app.get("/api/question", (req, res) => {
   });
 });
 
-// random sample of n questions, will send this to client
-// Question.aggregate([{ $sample: { size: 5 } }], (err, res) => {
-//   if (err) return err;
-//   console.log(res);
-// });
+app.get("/api/questions", (req, res) => {
+  Question.aggregate([{ $sample: { size: 5 } }], (err, result) => {
+    if (err) return err;
+    res.send(result);
+  });
+});
 
 app.post("/api/world", (req, res) => {
   console.log(req.body);

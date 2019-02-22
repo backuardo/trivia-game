@@ -22,6 +22,8 @@ class App extends Component {
     this.timer = setInterval(() => {
       this.handleTime();
     }, 1000);
+
+    this.getNewQuestions();
   }
 
   startGame = () => {
@@ -46,9 +48,26 @@ class App extends Component {
       .catch(err => console.log(err));
   };
 
+  // get questions
+  getNewQuestions = () => {
+    this.fetchQuestions()
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => console.log(err));
+  };
+
   // fetch question from server
   fetchQuestion = async () => {
     const response = await fetch("/api/question");
+    const body = await response.json();
+    if (response.status !== 200) throw Error(body.message);
+    return body;
+  };
+
+  // fetch batch of questions from server
+  fetchQuestions = async () => {
+    const response = await fetch("/api/questions");
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     return body;
