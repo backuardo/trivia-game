@@ -23,27 +23,6 @@ mongoose
     console.log("Could not connect to MongoDB");
   });
 
-// LOAD ------------------------------------------------------------------------
-// const questions = require("./questions");
-// const len = questions.length;
-// for (let i = 0; i < len; i++) {
-//   curr = questions[i];
-//   console.log(curr.answer);
-//
-//   const newQuestion = Question({
-//     question: curr.question,
-//     a: curr.a,
-//     b: curr.b,
-//     c: curr.c,
-//     answer: curr.answer
-//   });
-//
-//   newQuestion.save(err => {
-//     if (err) throw err;
-//     console.log("Question created!");
-//   });
-// }
-
 // SCORE -----------------------------------------------------------------------
 // const newHighScore = HighScore({
 //   score: 100,
@@ -56,7 +35,7 @@ mongoose
 // });
 
 // ROUTES ----------------------------------------------------------------------
-app.get("/api/question", (req, res) => {
+app.get("/api/oneQuestion", (req, res) => {
   Question.count().exec((err, count) => {
     let random = Math.floor(Math.random() * count);
     Question.findOne()
@@ -68,8 +47,8 @@ app.get("/api/question", (req, res) => {
   });
 });
 
-app.get("/api/questions", (req, res) => {
-  Question.aggregate([{ $sample: { size: 5 } }], (err, result) => {
+app.get("/api/manyQuestions", (req, res) => {
+  Question.aggregate([{ $sample: { size: 90 } }], (err, result) => {
     if (err) return err;
     res.send(result);
   });
@@ -84,10 +63,10 @@ app.post("/api/world", (req, res) => {
 
 // RUN SERVER ------------------------------------------------------------------
 if (process.env.NODE_ENV === "production") {
-  // Serve any static files
+  // serve static files
   app.use(express.static(path.join(__dirname, "client/build")));
 
-  // Handle React routing, return all requests to React app
+  // handle react routing, return all requests to react app
   app.get("*", function(req, res) {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
   });

@@ -10,12 +10,13 @@ const AppContainer = styled.div`
 
 class App extends Component {
   state = {
-    playing: false,
+    isPlaying: false,
     score: null,
-    time: null,
-    question: null,
-    answers: null,
-    numQuestions: 0
+    timeLeft: null,
+    questions: null, // stack of question objects
+    currQuestion: null,
+    currAnswers: null,
+    currQuestionNumber: null
   };
 
   componentDidMount() {
@@ -23,71 +24,78 @@ class App extends Component {
       this.handleTime();
     }, 1000);
 
-    this.getNewQuestions();
+    // grab initial stack of questions (to be replenished)
+    this.getInitialQuestions();
   }
 
+  // sets state that triggers MidGame ui
   startGame = () => {
     this.getNewQuestion();
-    this.setState({ playing: true, score: 0, time: 60, numQuestions: 0 });
+    this.setState({
+      isPlaying: true,
+      score: 0,
+      timeLeft: 60,
+      currQuestionNumber: 1
+    });
   };
 
-  // update question in state
+  // get initial array of questions (called in componentDidMount)
+  getInitialQuestions = () => {
+    this.fetchQuestions("/api/manyQuestions")
+      .then(res => {
+        this.setState({ questions: res });
+      })
+      .catch(err => console.log(err));
+  };
+
+  // fetch new question to replenish stack, update currQuestion/currAnswers
   getNewQuestion = () => {
-    this.fetchQuestion()
+    let questionStack = this.state.questions;
+    let nextQuestion = questionStack.pop();
+
+    this.fetchQuestions("/api/oneQuestion")
       .then(res => {
-        this.setState({
-          question: res.question,
-          answers: [
-            [res.a, res.a === res.answer], // [choice, isCorrect]
-            [res.b, res.b === res.answer],
-            [res.c, res.c === res.answer]
-          ],
-          numQuestions: this.state.numQuestions + 1
-        });
+        questionStack.push(res);
       })
       .catch(err => console.log(err));
+
+    this.setState({
+      currQuestion: nextQuestion.question,
+      currAnswers: [
+        [nextQuestion.a, nextQuestion.a === nextQuestion.answer],
+        [nextQuestion.b, nextQuestion.b === nextQuestion.answer],
+        [nextQuestion.c, nextQuestion.c === nextQuestion.answer]
+      ]
+    });
   };
 
-  // get questions
-  getNewQuestions = () => {
-    this.fetchQuestions()
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => console.log(err));
-  };
-
-  // fetch question from server
-  fetchQuestion = async () => {
-    const response = await fetch("/api/question");
+  // fetch one or many questions depending on endpoint
+  fetchQuestions = async endpoint => {
+    const response = await fetch(endpoint);
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     return body;
   };
 
-  // fetch batch of questions from server
-  fetchQuestions = async () => {
-    const response = await fetch("/api/questions");
-    const body = await response.json();
-    if (response.status !== 200) throw Error(body.message);
-    return body;
-  };
-
-  // check if correct, update score, get new question
+  // check if answer is correct, update score, get new question
   handleChoice = answer => {
     answer[1]
       ? this.setState({ score: this.state.score + 10 })
       : this.setState({ score: this.state.score - 5 });
 
+    this.setState({
+      currQuestionNumber: this.state.currQuestionNumber + 1
+    });
     this.getNewQuestion();
   };
 
+  // set time, possibly trigger game over
   handleTime = () => {
-    const currTime = this.state.time;
-    if (this.state.playing && currTime > 0) {
-      this.setState({ time: currTime - 1 });
+    const currTime = this.state.timeLeft;
+    if (this.state.isPlaying && currTime > 0) {
+      this.setState({ timeLeft: currTime - 1 });
     } else {
-      this.setState({ playing: false });
+      this.setState({ isPlaying: false });
     }
   };
 
@@ -105,23 +113,34 @@ class App extends Component {
   // };
 
   render() {
+    const {
+      isPlaying,
+      score,
+      currQuestion,
+      timeLeft,
+      currAnswers,
+      currQuestionNumber
+    } = this.state;
     return (
       <AppContainer>
-        {!this.state.playing && this.state.score === null && (
-          <PreGame startGame={this.startGame} />
-        )}
-        {!this.state.playing && this.state.score !== null && (
-          <PostGame score={this.state.score} startGame={this.startGame} />
-        )}
-        {this.state.playing && this.state.question && (
+        {/* PREGAME */}
+        {!isPlaying && score === null && <PreGame startGame={this.startGame} />}
+
+        {/* MIDGAME */}
+        {isPlaying && currQuestion && (
           <MidGame
-            score={this.state.score}
-            time={this.state.time}
-            question={this.state.question}
-            answers={this.state.answers}
+            score={score}
+            time={timeLeft}
+            question={currQuestion}
+            answers={currAnswers}
             handleChoice={this.handleChoice}
-            questionNum={this.state.numQuestions}
+            questionNum={currQuestionNumber}
           />
+        )}
+
+        {/* POSTGAME */}
+        {!isPlaying && score !== null && (
+          <PostGame score={score} startGame={this.startGame} />
         )}
       </AppContainer>
     );
