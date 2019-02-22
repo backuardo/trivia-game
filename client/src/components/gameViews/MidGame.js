@@ -16,11 +16,8 @@ const MidGame = props => {
       </QuestionContainer>
       {props.answers.map(answer => {
         return (
-          <div key={answer}>
-            <AnswerButton
-              isCorrect={answer[1]}
-              onClick={() => props.handleChoice(answer)}
-            >
+          <div key={answer[0]}>
+            <AnswerButton onClick={() => props.handleChoice(answer)}>
               {answer[0]}
             </AnswerButton>
           </div>

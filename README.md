@@ -9,13 +9,12 @@ Start dev servers: `yarn dev`
 ### UI
 
 1.  Center start button, game over, etc.
-2.  Countdown turns red/bold when 10 seconds remain
-3.  Indicate correct answer (via animation?)
-4.  Layout score, etc.
+2.  Indicate correct answer (via animation?)
+3.  Layout score, etc.
 
 ### UX
 
-1.  Transfer questions into a stack, pop them off, if list is empty repopulate.
+1.  Store answer as hash, compare that way
 2.  Record high score
 3.  Footer/header with link to high score, Github
 4.  Show high scores in game over screen
@@ -23,7 +22,8 @@ Start dev servers: `yarn dev`
 
 ### LATER
 
-1. Set up web worker to do millisecond countdown
+1. Animation
+2. Set up web worker to do millisecond countdown
 
 ## NOTES
 
