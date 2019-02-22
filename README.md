@@ -18,7 +18,7 @@ Start dev servers: `yarn dev`
 2.  Record high score
 3.  Footer/header with link to high score, Github
 4.  Show high scores in game over screen
-5.  Figure out a way to catch 'cheaters' (ppl changing state)
+5.  If questions array is empty, alert the user that their internet is fucked
 
 ### LATER
 
