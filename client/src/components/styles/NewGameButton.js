@@ -7,13 +7,13 @@ const NewGameButton = styled.button`
   font-weight: 500;
   font-family: inherit;
   border: 0;
-  border-radius: 5px;
+  border-radius: 2px;
   font-size: 200%;
   padding: 5px;
-  margin-top: 60px;
   margin-bottom: 10px;
   cursor: pointer;
   outline: none;
+  /* text-transform: uppercase; */
 
   background: ${props =>
     props.gameOver

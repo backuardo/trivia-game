@@ -7,13 +7,14 @@ const AnswerButton = styled.button`
   font-weight: 500;
   font-family: inherit;
   border: 0;
-  border-radius: 5px;
-  font-size: 200%;
+  border-radius: 2px;
+  font-size: 150%;
   padding: 5px;
   margin-top: 12px;
   margin-bottom: 12px;
   cursor: pointer;
   outline: none;
+  /* text-transform: uppercase; */
 
   @media only screen and (min-width: 768px) {
     /* tablets and desktop */
