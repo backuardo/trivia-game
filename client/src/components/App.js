@@ -30,13 +30,13 @@ class App extends Component {
 
   // sets state that triggers MidGame ui
   startGame = () => {
-    this.getNewQuestion();
     this.setState({
       isPlaying: true,
       score: 0,
-      timeLeft: 60,
+      timeLeft: 1,
       currQuestionNumber: 1
     });
+    this.getNewQuestion();
   };
 
   // get initial array of questions (called in componentDidMount)

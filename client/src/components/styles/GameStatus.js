@@ -1,11 +1,8 @@
 import styled from "styled-components";
 
 const GameStatus = styled.div`
-  margin-top: 24px;
-  margin-bottom: 24px;
-  padding-bottom: 12px;
-  display: inline-block;
-  text-align: left;
+  margin: auto;
+  border-radius: 5px;
 
   @media only screen and (min-width: 768px) {
     /* tablets and desktop */
@@ -17,8 +14,19 @@ const GameStatus = styled.div`
     width: 100%;
   }
 
+  .time {
+    text-align: right;
+    border: 1px solid #fefefe;
+  }
+
+  .score {
+    text-align: left;
+    border: 1px solid #fefefe;
+    float: left;
+  }
+
   &.warning {
-    .time {
+    .time h1 {
       color: #cb4d58;
     }
   }
