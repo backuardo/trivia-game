@@ -5,6 +5,7 @@ const GameStatus = styled.div`
   margin-bottom: 24px;
   padding-bottom: 12px;
   display: inline-block;
+  text-align: left;
 
   @media only screen and (min-width: 768px) {
     /* tablets and desktop */
@@ -14,18 +15,6 @@ const GameStatus = styled.div`
   @media only screen and (max-width: 767px) {
     /* phones */
     width: 100%;
-  }
-
-  h1 {
-    display: inline;
-  }
-
-  .score {
-    margin-right: 12px;
-  }
-
-  .time {
-    margin-left: 12px;
   }
 
   &.warning {

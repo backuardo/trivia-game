@@ -8,8 +8,7 @@ const MidGame = props => {
     <div>
       <GameStatus className={props.time <= 10 ? "warning" : ""}>
         <h1 className="score">Score: {props.score}</h1>
-        <h1>|</h1>
-        <h1 className="time">Time: {props.time}</h1>
+        <h2 className="time">Time: {props.time}</h2>
       </GameStatus>
       <QuestionContainer>
         <p>Q{props.questionNum}</p>
