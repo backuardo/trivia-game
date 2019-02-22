@@ -8,17 +8,13 @@ Start dev servers: `yarn dev`
 
 ### UI
 
-1.  Center start button, game over, etc.
-2.  Indicate correct answer (via animation?)
-3.  Layout score, etc.
+1.  Indicate correct answer (via animation?)
 
 ### UX
 
-1.  Store answer as hash, compare that way
-2.  Record high score
-3.  Footer/header with link to high score, Github
-4.  Show high scores in game over screen
-5.  If questions array is empty, alert the user that their internet is fucked
+1.  Record high score, display at end and on page
+2.  Footer/header with link to high score, Github
+3.  LOADING SPINNER! If questions array is empty, alert the user that their internet is fucked
 
 ### LATER
 
