@@ -33,7 +33,7 @@ class App extends Component {
     this.setState({
       isPlaying: true,
       score: 0,
-      timeLeft: 1,
+      timeLeft: 60,
       currQuestionNumber: 1
     });
     this.getNewQuestion();
