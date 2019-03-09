@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
 const Question = require("./models/Question");
-const HighScore = require("./models/HighScore");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -23,17 +22,6 @@ mongoose
     console.log("Could not connect to MongoDB");
   });
 
-// SCORE -----------------------------------------------------------------------
-// const newHighScore = HighScore({
-//   score: 100,
-//   name: "Ben E"
-// });
-//
-// newHighScore.save(err => {
-//   if (err) throw err;
-//   console.log("HighScore created!");
-// });
-
 // ROUTES ----------------------------------------------------------------------
 app.get("/api/oneQuestion", (req, res) => {
   Question.count().exec((err, count) => {
@@ -52,13 +40,6 @@ app.get("/api/manyQuestions", (req, res) => {
     if (err) return err;
     res.send(result);
   });
-});
-
-app.post("/api/world", (req, res) => {
-  console.log(req.body);
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`
-  );
 });
 
 // RUN SERVER ------------------------------------------------------------------
